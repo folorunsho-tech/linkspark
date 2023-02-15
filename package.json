@@ -1,0 +1,19 @@
+{
+  "name": "linkspark",
+  "version": "1.0.0",
+  "description": "A clone of bitly, a link shortener app built by Folorunsho Ibrahim Babtunde",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "linkspark",
+    "tacheyon",
+    "bitly clone",
+    "bitly",
+    "link shortener",
+    "Folorunsho"
+  ],
+  "author": "Folorunsho Ibrahim Babtunde",
+  "license": "ISC"
+}
