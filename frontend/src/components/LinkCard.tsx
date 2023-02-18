@@ -41,7 +41,7 @@ const LinkCard = (props: Data) => {
   const short_link = props.shortLink.split("/");
   const displayDate = getCorrectDate(fullDate);
   return (
-    <NavLink to={`:${props.id}`}>
+    <NavLink to={`/links/${props.id}/?order=date-created&tag=`}>
       <div
         id={props.id}
         className={`flex w-full gap-4 ${({ isActive }: any) =>

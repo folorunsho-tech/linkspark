@@ -19,6 +19,7 @@ import CSVBulk from "./pages/settings/account/CSVBulk";
 import Integrations from "./pages/settings/personal/Integrations";
 import NavContainer from "./layouts/NavContainer";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import LinkContent from "./components/LinkContent";
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
       {
         path: "/links",
         element: <Links />,
+        children: [{ path: "/links/:id", element: <LinkContent /> }],
       },
       {
         path: "/qrcodes",

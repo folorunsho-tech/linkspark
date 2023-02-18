@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -7,23 +7,33 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import LinkCard from "../../components/LinkCard";
-import { useSearchParams } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getLinks } from "../../queries/links";
-import axios from "axios";
 const Links = () => {
   // Access the client
   // const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const loc = useLocation();
+  const searched = loc.search.substring(1).split("&");
+  const filters = {
+    order: searched[0].split("=")[1],
+    tag: searched[1].split("=")[1],
+  };
 
   const [tag, setTag] = React.useState("");
-  const [currLink, setCurrLink] = React.useState("");
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     setTag(event.target.value);
   };
 
   const [order, setOrder] = React.useState("date-created");
-
+  useEffect(() => {
+    navigate("?order=" + order + "&tag=" + tag, {
+      replace: true,
+      state: { order, tag },
+    });
+  }, [order, tag]);
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOrder((event.target as HTMLInputElement).value);
   };
@@ -34,13 +44,12 @@ const Links = () => {
     setBtnState(!btnState);
   };
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["spark_links"],
     queryFn: getLinks,
     refetchOnWindowFocus: false,
   });
-
   return (
     <main className="bg-gray-100 h-screen">
       <header className="relative p-4 border-b-1 shadow-sm bg-white border-b-gray-300">
@@ -77,12 +86,12 @@ const Links = () => {
                 onChange={handleRadioChange}
               >
                 <FormControlLabel
-                  value="Date created"
+                  value="date-created"
                   control={<Radio size="small" />}
                   label="Date created"
                 />
                 <FormControlLabel
-                  value="Top performing"
+                  value="top-performing"
                   control={<Radio size="small" />}
                   label="Top performing"
                 />
@@ -107,13 +116,15 @@ const Links = () => {
             Engagements all time
           </h2>
           <section>
-            {data?.linkList?.map((link: any) => (
-              <LinkCard key={link?.id} {...link} />
-            ))}
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              data.map((link: any) => <LinkCard key={link?.id} {...link} />)
+            )}
           </section>
         </div>
         <div id="Link-Details" className="p-4">
-          content
+          <Outlet />
         </div>
       </section>
     </main>

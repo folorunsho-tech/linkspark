@@ -31,7 +31,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar className="bg-gray-800 p-3" children="FI" />
+            <Avatar className="bg-gray-900 p-3" children="FI" />
             <span className="text-base text-black">Folorunsho Ibrahim</span>
             <ArrowDropDownIcon />
           </IconButton>
@@ -73,7 +73,7 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem className="space-x-6">
-          <Avatar className="bg-gray-800 p-6" children="FI" />
+          <Avatar className="bg-gray-900 p-6" children="FI" />
           <div className="flex flex-col gap-1">
             <span className="text-gray-900">Folorunsho Ibrahim</span>
             <span className="text-gray-500 text-sm">
