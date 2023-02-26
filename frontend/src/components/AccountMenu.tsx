@@ -25,8 +25,13 @@ export default function AccountMenu() {
           <IconButton
             onClick={handleClick}
             size="small"
-            className="rounded-sm space-x-2 hover:bg-transparent"
-            sx={{ ml: 2 }}
+            className="rounded-sm space-x-2 "
+            sx={{
+              ml: 2,
+              ["&:hover"]: {
+                backgroundColor: "transparent",
+              },
+            }}
             aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}

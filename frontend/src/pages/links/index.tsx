@@ -13,27 +13,14 @@ import { getLinks } from "../../queries/links";
 const Links = () => {
   // Access the client
   // const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const loc = useLocation();
-  const searched = loc.search.substring(1).split("&");
-  const filters = {
-    order: searched[0].split("=")[1],
-    tag: searched[1].split("=")[1],
-  };
 
   const [tag, setTag] = React.useState("");
 
+  const [order, setOrder] = React.useState("date-created");
   const handleSelectChange = (event: SelectChangeEvent) => {
     setTag(event.target.value);
   };
 
-  const [order, setOrder] = React.useState("date-created");
-  useEffect(() => {
-    navigate("?order=" + order + "&tag=" + tag, {
-      replace: true,
-      state: { order, tag },
-    });
-  }, [order, tag]);
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOrder((event.target as HTMLInputElement).value);
   };
@@ -44,7 +31,6 @@ const Links = () => {
     setBtnState(!btnState);
   };
 
-  // const queryClient = useQueryClient();
   const { data, isLoading, error } = useQuery({
     queryKey: ["spark_links"],
     queryFn: getLinks,
@@ -102,20 +88,20 @@ const Links = () => {
         {btnState && <section>total links chart</section>}
         <button
           onClick={handleBtnClick}
-          className="absolute right-1/2 -bottom-6 translate-y-1.5 p-1 text-sm text-indigo-700 rounded-sm border border-t-gray-200 border-gray-300 shadow-sm"
+          className="absolute right-1/2 -bottom-6 bg-gray-50 translate-y-1.5 p-1 text-sm text-indigo-700 rounded-sm border border-t-gray-200 border-gray-300 shadow-sm"
         >
           Show chart
         </button>
       </header>
-      <section className="flex justify-between h-full">
+      <section className="flex h-3/4 overflow-y-hidden">
         <div
           id="Links-Container"
-          className=" border-r-2 space-y-4 border-r-gray-300 w-1/3"
+          className=" border-r-2  space-y-4 border-r-gray-300 w-3/5"
         >
           <h2 className="p-4 pb-2 text-gray-600 font-normal text-right">
             Engagements all time
           </h2>
-          <section>
+          <section className="overflow-y-auto h-full">
             {isLoading ? (
               <p>Loading...</p>
             ) : (
@@ -123,7 +109,7 @@ const Links = () => {
             )}
           </section>
         </div>
-        <div id="Link-Details" className="p-4">
+        <div id="Link-Details" className="p-4 w-full h-full">
           <Outlet />
         </div>
       </section>

@@ -8,8 +8,6 @@ type Data = {
   shortLink: string;
   totalEngagements: number;
   id: string;
-  onCardClick: any;
-  active: Function;
 };
 const LinkCard = (props: Data) => {
   const fullDate = new Date(props.created_at);
@@ -41,15 +39,15 @@ const LinkCard = (props: Data) => {
   const short_link = props.shortLink.split("/");
   const displayDate = getCorrectDate(fullDate);
   return (
-    <NavLink to={`/links/${props.id}/?order=date-created&tag=`}>
-      <div
-        id={props.id}
-        className={`flex w-full gap-4 ${({ isActive }: any) =>
-          isActive
-            ? "bg-white"
-            : "bg-transparent"} p-3 cursor-pointer border-t-2 border-t-gray-200`}
-        onClick={props.onCardClick}
-      >
+    <NavLink
+      to={`/links/${props.id}/details`}
+      className={({ isActive }: any) =>
+        isActive
+          ? "bg-white p-3 cursor-pointer border-t-2 border-t-gray-200 flex w-full gap-4"
+          : "bg-transparent p-3 cursor-pointer border-t-2 border-t-gray-200 flex w-full gap-4"
+      }
+    >
+      <div id={props.id} className={`flex w-full gap-4 `}>
         <input
           type="checkbox"
           name="stuff"
@@ -60,15 +58,20 @@ const LinkCard = (props: Data) => {
           <span className="uppercase text-gray-400 text-xs font-medium">
             {displayDate}
           </span>
-          <span className="">{props.name}</span>
+          <span className="text-base">{props.name}</span>
           <p className="flex items-center justify-between w-full mt-2">
             <span className="text-orange-600">
               {short_link[0]}/
               <span className="font-medium">{short_link[1]}</span>
             </span>
-            <span className="text-gray-500 text-sm">
+            <span className="text-gray-500 text-sm flex items-center gap-1">
               {props.totalEngagements}
-              <LeaderboardIcon className="text-gray-500 text-sm" />
+              <LeaderboardIcon
+                className="text-gray-500 "
+                sx={{
+                  fontSize: "1rem",
+                }}
+              />
             </span>
           </p>
         </div>

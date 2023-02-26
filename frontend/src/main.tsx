@@ -20,6 +20,7 @@ import Integrations from "./pages/settings/personal/Integrations";
 import NavContainer from "./layouts/NavContainer";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import LinkContent from "./components/LinkContent";
+import GroupDetails from "./pages/settings/account/GroupDetails";
 // Create a client
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
       {
         path: "/links",
         element: <Links />,
-        children: [{ path: "/links/:id", element: <LinkContent /> }],
+        children: [{ path: "/links/:id/details", element: <LinkContent /> }],
       },
       {
         path: "/qrcodes",
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
           {
             path: "/settings/organization/:org_id/groups",
             element: <Groups />,
+          },
+          {
+            path: "/settings/organization/:org_id/groups/:group_id",
+            element: <GroupDetails />,
           },
           {
             path: "/settings/organization/:org_id/bulk-upload",
